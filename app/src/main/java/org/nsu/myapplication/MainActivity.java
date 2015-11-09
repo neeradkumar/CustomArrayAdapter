@@ -13,7 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    //https://github.com/neeradkumar/CustomArrayAdapter
+    //https://github.com/neeradkumar/CustomArrayAdapter\
+    final ArrayList<PersonItem> personItems = new ArrayList<>();
+    PersonAdapter nameAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,13 +26,12 @@ public class MainActivity extends AppCompatActivity {
         PersonItem atiar = new PersonItem("Atiar","Swajan",R.drawable.panda);
         PersonItem jibne = new PersonItem("Kamal","Jibne",R.drawable.monkey);
         PersonItem nafis = new PersonItem("Nafis","UI",R.drawable.cat);
-        final ArrayList<PersonItem> personItems = new ArrayList<>();
+
         personItems.add(atiar);
         personItems.add(jibne);
         personItems.add(nafis);
 
-        PersonAdapter nameAdapter =
-                new PersonAdapter(this, personItems);
+         nameAdapter =      new PersonAdapter(this, personItems);
 
         listView.setAdapter(nameAdapter);
 
@@ -39,11 +40,15 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent,
                                     View view, int i, long id) {
                 PersonItem personItem = personItems.get(i);
-                String name = personItem.name;
-                Toast.makeText(MainActivity.this,
-                        "I clicked name "+name,
-                        Toast.LENGTH_SHORT).show();
+                personItem.nickName = "Clicked";
+                nameAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void addPerson(View view){
+        PersonItem newPerson = new PersonItem("Saadman","nick",R.drawable.cat);
+        personItems.add(newPerson);
+        nameAdapter.notifyDataSetChanged();
     }
 }
